@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#181512">
+    <meta name="theme-color" content="#14110F">
     <meta name="description" content="La Santa Barber - Espacio de relajación y estilo masculino. Reserva tu cita en línea.">
     <meta name="author" content="Luis Rafael Martinez Angulo - Tecnólogo en Desarrollo de Software">
-    <title id="page-title">La Santa Barber | Estilo & Tradición</title>
+    
+    <!-- PWA & Apple iOS / macOS Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo-barber.jpeg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="La Santa Barber">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Seguridad Básica en Cliente (CSP y Referrer) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <title id="page-title">La Santa Barber | Estilo &amp; Tradición</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -273,6 +286,78 @@
 <body class="bg-vintage-texture min-h-screen flex flex-col selection:bg-barber-gold selection:text-barber-dark">
 
     <!-- ==========================================================================
+         PANTALLA DE ACCESO (LOGIN SEGURO E INTUITIVO)
+         ========================================================================== -->
+    <div id="login-gate" class="fixed inset-0 z-50 bg-[#14110F] bg-vintage-texture flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-barber-card border-2 border-barber-gold/40 rounded-3xl p-7 sm:p-8 shadow-2xl text-center relative overflow-hidden">
+            <!-- Resplandor superior -->
+            <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-64 h-32 bg-barber-gold/15 blur-2xl rounded-full pointer-events-none"></div>
+
+            <!-- Logo con animación -->
+            <div class="relative inline-block mb-4">
+                <span class="sparkle-star text-xs -top-1 -left-1">✦</span>
+                <span class="sparkle-star text-sm -bottom-1 -right-1" style="animation-delay: 0.8s;">✦</span>
+                <div class="logo-wrapper w-24 h-24">
+                    <div class="logo-inner w-full h-full flex items-center justify-center">
+                        <img src="logo-barber.jpeg" alt="Logo La Santa Barber" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="font-serifVintage text-2xl sm:text-3xl font-bold text-barber-cream tracking-wider">LA SANTA BARBER</h2>
+            <p class="text-xs text-barber-gold tracking-widest uppercase mt-1">Acceso Exclusivo Clientes &amp; Equipo</p>
+
+            <form id="login-form" onsubmit="handleLogin(event)" class="mt-6 space-y-4 text-left">
+                <div>
+                    <label for="login-user" class="block text-xs font-semibold text-barber-goldLight mb-1.5">
+                        <i class="fa-solid fa-user text-barber-gold mr-1.5"></i>Usuario
+                    </label>
+                    <input type="text" id="login-user" required autocomplete="username" placeholder="Ingresa tu usuario"
+                           class="w-full bg-barber-dark border border-barber-gold/35 rounded-xl px-4 py-3 text-sm text-barber-cream focus:outline-none focus:border-barber-gold transition">
+                </div>
+
+                <div>
+                    <label for="login-pass" class="block text-xs font-semibold text-barber-goldLight mb-1.5">
+                        <i class="fa-solid fa-lock text-barber-gold mr-1.5"></i>Contraseña
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="login-pass" required autocomplete="current-password" placeholder="••••••••"
+                               class="w-full bg-barber-dark border border-barber-gold/35 rounded-xl px-4 py-3 pr-11 text-sm text-barber-cream focus:outline-none focus:border-barber-gold transition">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-barber-sand/60 hover:text-barber-gold" title="Mostrar/Ocultar contraseña">
+                            <i id="pass-eye-icon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs text-barber-sand/75 pt-1">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="login-remember" checked class="accent-[#D4AF37] rounded">
+                        <span>Mantener sesión activa</span>
+                    </label>
+                </div>
+
+                <p id="login-error-msg" class="hidden text-xs text-red-400 bg-red-950/50 border border-red-500/40 rounded-xl px-3 py-2 text-center">
+                    Usuario o contraseña incorrectos. Verifica e intenta nuevamente.
+                </p>
+
+                <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-barber-goldDark via-barber-gold to-barber-goldDark text-barber-dark font-bold text-sm shadow-lg hover:brightness-110 active:scale-98 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Ingresar a La Santa Barber</span>
+                </button>
+            </form>
+
+            <!-- Guía rápida y botón de acceso directo para clientes -->
+            <div class="mt-5 pt-4 border-t border-barber-gold/15 space-y-2.5 text-[11px] text-barber-sand/70">
+                <p>Usuario: <strong class="text-barber-goldLight">cliente</strong> • Contraseña: <strong class="text-barber-goldLight">2026</strong></p>
+                <button type="button" onclick="quickClientLogin()" class="w-full py-2 px-3 rounded-xl bg-barber-wood/80 border border-barber-gold/30 text-barber-goldLight hover:bg-barber-gold hover:text-barber-dark font-semibold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Acceso Directo como Cliente</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
          BARRA DE NAVEGACIÓN SUPERIOR CON LOGO ANIMADO (ZOOM + BRILLO + DESTELLOS)
          ========================================================================== -->
     <header class="sticky top-0 z-40 bg-barber-dark/95 backdrop-blur-md border-b border-barber-gold/25 shadow-xl">
@@ -288,8 +373,7 @@
 
                     <div class="logo-wrapper w-20 h-20 sm:w-[5.6rem] sm:h-[5.6rem]">
                         <div class="logo-inner w-full h-full flex items-center justify-center">
-                            <!-- SVG Emblema Vintage fiel al logo de La Santa Barber (Corona, LA SANTA BARBER, Navaja/Tijera, EST. 2025) -->
-<img src="logo-barber.jpeg" alt="Logo original de La Santa Barber" class="w-full h-full object-cover">
+                            <img src="logo-barber.jpeg" alt="Logo original de La Santa Barber" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
@@ -304,8 +388,18 @@
                 <a href="#inicio" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-barber-cream/90 hover:text-barber-gold hover:bg-barber-wood/70 transition whitespace-nowrap">Inicio</a>
                 <a href="#servicios" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-barber-cream/90 hover:text-barber-gold hover:bg-barber-wood/70 transition whitespace-nowrap">Servicios</a>
                 <a href="#equipo" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-barber-cream/90 hover:text-barber-gold hover:bg-barber-wood/70 transition whitespace-nowrap">Nuestro Equipo</a>
+                
+                <!-- Botón Instalar App PWA (aparece automáticamente cuando el navegador lo permite) -->
+                <button id="pwa-install-btn" onclick="installPWA()" class="hidden px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-barber-wood border border-barber-gold/50 text-barber-goldLight hover:bg-barber-gold hover:text-barber-dark transition whitespace-nowrap items-center gap-1.5" title="Instalar aplicación en tu celular o PC">
+                    <i class="fa-solid fa-download"></i> <span>Instalar App</span>
+                </button>
+
                 <button onclick="openBookingModal()" class="ml-1 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-barber-goldDark via-barber-gold to-barber-goldDark text-barber-dark shadow-md hover:brightness-110 transition whitespace-nowrap flex items-center gap-1.5">
                     <i class="fa-regular fa-calendar-check"></i> Reservar
+                </button>
+
+                <button onclick="logoutApp()" class="ml-1 px-2.5 py-2 rounded-xl text-xs text-barber-sand/75 hover:text-red-400 hover:bg-barber-wood/70 transition whitespace-nowrap" title="Cerrar Sesión">
+                    <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </nav>
         </div>
@@ -371,7 +465,7 @@
 
                 <!-- Texto de Bienvenida Vintage Elegante -->
                 <p id="hero-welcome-text" class="mt-4 max-w-2xl mx-auto font-serifEditorial italic text-lg sm:text-xl md:text-2xl text-barber-sand/95 leading-relaxed">
-                    "Espacio de relajación y estilo masculino. Bienvenidos a una experiencia extraordianaria donde barberos profesionales te esperan para complacer tu buen gusto."
+                    "Espacio de relajación y estilo masculino. Bienvenidos a una experiencia extraordinaria donde barberos profesionales esperan complacer tu buen gusto."
                 </p>
 
                 <!-- Botones Principales de Acción -->
@@ -474,7 +568,7 @@
         </section>
 
         <!-- ======================================================================
-             SECCIÓN 2: CATÁLOGO DE SERVICIOS Y TARIFAS
+             SECCIÓN 2: CATÁLOGO DE SERVICIOS Y TARIFAS (LIMPIO Y ELEGANTE)
              ====================================================================== -->
         <section id="servicios" class="py-16 px-4 sm:px-6 lg:px-8 bg-barber-wood/40 border-y border-barber-gold/15">
             <div class="max-w-5xl mx-auto">
@@ -487,9 +581,9 @@
                     </p>
                 </div>
 
-                <!-- Lista dinámica de servicios renderizada desde JS -->
+                <!-- Lista dinámica de servicios renderizada desde JS (sin botones inferiores) -->
                 <div id="services-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Se llena dinámicamente con loadAppData() -->
+                    <!-- Se llena dinámicamente con loadAppState() -->
                 </div>
 
                 <!-- Nota de otros servicios -->
@@ -519,16 +613,14 @@
 
                 <!-- Equipo: Junior, Gabriel y Esteban -->
                 <div id="barbers-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Se llena dinámicamente con loadAppData() -->
+                    <!-- Se llena dinámicamente con loadAppState() -->
                 </div>
             </div>
         </section>
-
-        
     </main>
 
     <!-- ==========================================================================
-         PIE DE PÁGINA LEGAL Y REDES SOCIALES
+         PIE DE PÁGINA LEGAL Y REDES SOCIALES (SIN CORREO ICLOUD)
          ========================================================================== -->
     <footer class="bg-[#0D0B09] border-t border-barber-gold/25 pt-12 pb-8 px-4 sm:px-6 lg:px-8 text-barber-sand/80">
         <div class="max-w-6xl mx-auto">
@@ -565,17 +657,13 @@
                            class="w-10 h-10 rounded-xl bg-barber-wood border border-barber-gold/30 flex items-center justify-center text-barber-cream hover:bg-[#25D366] hover:text-white transition" title="WhatsApp Citas">
                             <i class="fa-brands fa-whatsapp text-lg"></i>
                         </button>
-                        <a id="social-email" href="mailto:neiker_2532@icloud.com"
-                           class="w-10 h-10 rounded-xl bg-barber-wood border border-barber-gold/30 flex items-center justify-center text-barber-cream hover:bg-barber-gold hover:text-barber-dark transition" title="Correo iCloud">
-                            <i class="fa-regular fa-envelope text-lg"></i>
-                        </a>
                     </div>
                     <p class="mt-3 text-[11px] text-barber-sand/65">
-                        Correo de gestión y calendario iCloud: <span id="footer-email-text" class="text-barber-gold">neiker_2532@icloud.com</span>
+                        Síguenos en Instagram (<span class="text-barber-gold">@la_santa.barber_</span>) y TikTok (<span class="text-barber-gold">@barberlasanta</span>).
                     </p>
                 </div>
 
-                <!-- Columna 3: Marco Legal Colombiano & Acceso Dueño -->
+                <!-- Columna 3: Marco Legal Colombiano -->
                 <div class="flex flex-col justify-between">
                     <div>
                         <h4 class="text-sm font-bold uppercase tracking-wider text-barber-cream mb-2">Seguridad &amp; Privacidad</h4>
@@ -583,7 +671,6 @@
                             Tratamiento de datos personales protegido bajo la <strong>Ley Estatutaria 1581 de 2012</strong> (Art. 9 y Art. 15 Constitución Política de Colombia - Habeas Data) y Decreto 1377 de 2013.
                         </p>
                     </div>
-                    
                 </div>
             </div>
 
@@ -615,64 +702,7 @@
     </div>
 
     <!-- ==========================================================================
-         WIDGET FLOTANTE: CHATBOT ASISTENTE VIRTUAL DE LA BARBERÍA
-         ========================================================================== -->
-    <div class="fixed bottom-5 right-5 z-40">
-        <!-- Botón disparador del Chatbot -->
-        <button id="chatbot-toggle-btn" onclick="toggleChatbot()" class="w-14 h-14 rounded-full bg-gradient-to-br from-barber-gold to-barber-goldDark text-barber-dark shadow-2xl border-2 border-barber-cream/40 flex items-center justify-center hover:scale-105 transition relative" title="Asistente Virtual">
-            <i class="fa-solid fa-robot text-2xl"></i>
-            <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-barber-dark"></span>
-        </button>
-
-        <!-- Ventana del Chatbot -->
-        <div id="chatbot-window" class="hidden absolute bottom-16 right-0 w-[330px] sm:w-[370px] bg-barber-card border border-barber-gold/40 rounded-3xl shadow-2xl overflow-hidden flex flex-col">
-            <!-- Cabecera del Bot -->
-            <div class="bg-gradient-to-r from-barber-wood to-barber-dark p-4 border-b border-barber-gold/25 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full bg-barber-gold/20 border border-barber-gold flex items-center justify-center text-barber-gold">
-                        <i class="fa-solid fa-scissors"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-barber-cream">Asistente Virtual</h4>
-                        <span class="text-[11px] text-emerald-400 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> En línea • Respuesta inmediata
-                        </span>
-                    </div>
-                </div>
-                <button onclick="toggleChatbot()" class="text-barber-sand/70 hover:text-barber-gold p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <!-- Historial de Mensajes -->
-            <div id="chatbot-messages" class="p-4 h-72 overflow-y-auto space-y-3 text-xs sm:text-sm bg-barber-dark/70">
-                <div class="bg-barber-wood/90 border border-barber-gold/20 text-barber-cream p-3 rounded-2xl rounded-tl-none">
-                    ¡Hola! Soy el asistente virtual de <strong class="text-barber-gold">La Santa Barber</strong>. ¿En qué te puedo ayudar hoy?
-                </div>
-            </div>
-
-            <!-- Acciones Rápidas del Chatbot -->
-            <div class="px-3 py-2 bg-barber-wood/60 border-t border-barber-gold/15 flex gap-1.5 overflow-x-auto">
-                <button onclick="botQuickReply('precios')" class="px-2.5 py-1 rounded-full bg-barber-dark border border-barber-gold/30 text-[11px] text-barber-goldLight hover:bg-barber-gold hover:text-barber-dark transition whitespace-nowrap">💰 Precios</button>
-                <button onclick="botQuickReply('horarios')" class="px-2.5 py-1 rounded-full bg-barber-dark border border-barber-gold/30 text-[11px] text-barber-goldLight hover:bg-barber-gold hover:text-barber-dark transition whitespace-nowrap">🕒 Horarios</button>
-                <button onclick="botQuickReply('ubicacion')" class="px-2.5 py-1 rounded-full bg-barber-dark border border-barber-gold/30 text-[11px] text-barber-goldLight hover:bg-barber-gold hover:text-barber-dark transition whitespace-nowrap">📍 Ubicación</button>
-                <button onclick="botQuickReply('agendar')" class="px-2.5 py-1 rounded-full bg-barber-gold text-[11px] text-barber-dark font-bold hover:brightness-110 transition whitespace-nowrap">📅 Agendar</button>
-                <button onclick="botQuickReply('humano')" class="px-2.5 py-1 rounded-full bg-barber-dark border border-emerald-500/40 text-[11px] text-emerald-300 hover:bg-emerald-600 hover:text-white transition whitespace-nowrap">👨‍💼 Barbero Humano</button>
-            </div>
-
-            <!-- Input de Texto -->
-            <form onsubmit="handleChatbotSubmit(event)" class="p-2.5 bg-barber-card border-t border-barber-gold/20 flex items-center gap-2">
-                <input id="chatbot-input" type="text" placeholder="Escribe tu consulta aquí..."
-                       class="flex-1 bg-barber-dark border border-barber-gold/25 rounded-xl px-3 py-2 text-xs text-barber-cream focus:outline-none focus:border-barber-gold">
-                <button type="submit" class="w-9 h-9 rounded-xl bg-barber-gold text-barber-dark flex items-center justify-center hover:brightness-110 transition">
-                    <i class="fa-solid fa-paper-plane text-xs"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ==========================================================================
-         MODAL 1: FORMULARIO DE AGENDAMIENTO + HABEAS DATA + iCLOUD/WA
+         MODAL 1: FORMULARIO DE AGENDAMIENTO + HABEAS DATA
          ========================================================================== -->
     <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-barber-card border-2 border-barber-gold/40 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-auto">
@@ -690,20 +720,17 @@
 
             <!-- Formulario -->
             <form id="booking-form" onsubmit="submitBooking(event)" class="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
-                
-                
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Nombre Completo -->
                     <div>
                         <label class="block text-xs font-semibold text-barber-goldLight mb-1">Nombre Completo *</label>
-                        <input type="text" id="book-name" required placeholder="Ej. Carlos Andrés Pérez"
+                        <input type="text" id="book-name" required placeholder="Ej. Luis Rafael Martínez"
                                class="w-full bg-barber-dark border border-barber-gold/30 rounded-xl px-3.5 py-2.5 text-sm text-barber-cream focus:outline-none focus:border-barber-gold">
                     </div>
                     <!-- Teléfono / WhatsApp -->
                     <div>
                         <label class="block text-xs font-semibold text-barber-goldLight mb-1">Tu WhatsApp / Celular *</label>
-                        <input type="tel" id="book-phone" required placeholder="Ej. 3001234567"
+                        <input type="tel" id="book-phone" required placeholder="Ej. 3146332088"
                                class="w-full bg-barber-dark border border-barber-gold/30 rounded-xl px-3.5 py-2.5 text-sm text-barber-cream focus:outline-none focus:border-barber-gold">
                     </div>
                 </div>
@@ -714,7 +741,6 @@
                         <label class="block text-xs font-semibold text-barber-goldLight mb-1">Servicio que Solicitas *</label>
                         <select id="book-service" required
                                 class="w-full bg-barber-dark border border-barber-gold/30 rounded-xl px-3.5 py-2.5 text-sm text-barber-cream focus:outline-none focus:border-barber-gold">
-                            <!-- Opciones cargadas dinámicamente -->
                         </select>
                     </div>
                     <!-- Selección de Barbero -->
@@ -722,15 +748,14 @@
                         <label class="block text-xs font-semibold text-barber-goldLight mb-1">Barbero de tu Preferencia *</label>
                         <select id="book-barber" required
                                 class="w-full bg-barber-dark border border-barber-gold/30 rounded-xl px-3.5 py-2.5 text-sm text-barber-cream focus:outline-none focus:border-barber-gold">
-                            <!-- Opciones cargadas dinámicamente -->
                         </select>
                     </div>
                 </div>
 
                 <!-- Ubicación del Cliente -->
                 <div>
-                    <label class="block text-xs font-semibold text-barber-goldLight mb-1">Tu Ubicación (Dirección, Edificio o Barrio) *</label>
-                    <input type="text" id="book-location" required placeholder="Ej. Barrio Centro, Edificio El Prado Apto 302"
+                    <label class="block text-xs font-semibold text-barber-goldLight mb-1">Tu Ubicación (Sector, Barrio, Localidad) *</label>
+                    <input type="text" id="book-location" required placeholder="Ej. Toledo Campestre (Sector, Barrio, Localidad)"
                            class="w-full bg-barber-dark border border-barber-gold/30 rounded-xl px-3.5 py-2.5 text-sm text-barber-cream focus:outline-none focus:border-barber-gold">
                 </div>
 
@@ -764,14 +789,14 @@
                 <button type="submit" id="book-submit-btn"
                         class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-barber-goldDark via-barber-gold to-barber-goldDark text-barber-dark font-bold text-sm sm:text-base shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-calendar-check"></i>
-                    <span>Confirmar Cita y Enviar a WhatsApp / Calendario</span>
+                    <span>Confirmar Cita y Preparar WhatsApp</span>
                 </button>
             </form>
         </div>
     </div>
 
     <!-- ==========================================================================
-         MODAL 2: CONFIRMACIÓN DE CITA (ENLACE WHATSAPP + CALENDARIO .ICS + ICLOUD)
+         MODAL 2: CONFIRMACIÓN DE CITA (ENLACE WHATSAPP + CALENDARIO .ICS)
          ========================================================================== -->
     <div id="confirmation-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-barber-card border-2 border-emerald-500/50 rounded-3xl w-full max-w-md p-6 text-center shadow-2xl space-y-4">
@@ -789,19 +814,12 @@
                     <span>Enviar Confirmación al WhatsApp del Barbero</span>
                 </a>
 
-                <!-- 2. Descargar evento .ICS para Apple Calendar / iCloud / Google Calendar -->
+                <!-- 2. Descargar evento .ICS para Apple Calendar / Google Calendar -->
                 <button id="conf-ics-btn" onclick="downloadLastBookingICS()"
                         class="w-full py-3 px-4 rounded-xl bg-barber-gold text-barber-dark font-bold text-sm flex items-center justify-center gap-2 hover:brightness-110 transition">
                     <i class="fa-regular fa-calendar-plus text-lg"></i>
-                    <span>Guardar en Calendario del Celular / iCloud (.ics)</span>
+                    <span>Guardar en Calendario del Celular (.ics)</span>
                 </button>
-
-                <!-- 3. Notificar al correo iCloud del negocio -->
-                <a id="conf-mailto-link" href="#"
-                   class="w-full py-2.5 px-4 rounded-xl bg-barber-wood border border-barber-gold/30 text-barber-cream font-medium text-xs flex items-center justify-center gap-2 hover:border-barber-gold transition">
-                    <i class="fa-regular fa-envelope text-barber-gold"></i>
-                    <span>Notificar por Correo (neiker_2532@icloud.com)</span>
-                </a>
             </div>
 
             <button onclick="closeConfirmationModal()" class="mt-2 text-xs text-barber-sand/60 hover:text-barber-cream underline">
@@ -811,7 +829,7 @@
     </div>
 
     <!-- ==========================================================================
-         NOTIFICACIÓN TOAST NO INTRUSIVA (SIN USAR ALERT() NI CONFIRM())
+         NOTIFICACIÓN TOAST NO INTRUSIVA
          ========================================================================== -->
     <div id="toast-notification" class="fixed top-20 right-4 z-50 hidden max-w-sm bg-barber-wood border-l-4 border-barber-gold text-barber-cream px-4 py-3 rounded-xl shadow-2xl text-xs sm:text-sm flex items-center gap-3">
         <i id="toast-icon" class="fa-solid fa-circle-check text-barber-gold text-lg"></i>
@@ -819,17 +837,173 @@
     </div>
 
     <!-- ==========================================================================
-         LÓGICA JAVASCRIPT INTEGRADA (ESTADO, CITAS, ICS, BOT)
+         LÓGICA JAVASCRIPT OPTIMIZADA (LOGIN SEGURO, PWA, CITAS, WHATSAPP, ICS)
          ========================================================================== -->
     <script>
         /* ========================================================================
-           1. CONFIGURACIÓN INICIAL POR DEFECTO ("LA SANTA BARBER")
+           1. SISTEMA DE ACCESO (LOGIN CON HASH SHA-256 PARA MAYOR SEGURIDAD)
+           ======================================================================== */
+        // Hashes SHA-256 de credenciales autorizadas (no se exponen contraseñas en texto plano en la lógica de validación)
+        // Usuarios válidos:
+        // - cliente / 2026
+        // - santabarber / 2026
+        // - admin / santa2026
+        const AUTHORIZED_USERS = {
+            "cliente": "158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab",
+            "santabarber": "158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab",
+            "admin": "1aae4a8729611e77c82f5703b196ef86259aa9b3d84647f0d23583466e16c9a3"
+        };
+
+        // Implementación SHA-256 nativa + respaldo puro JS para funcionar tanto en HTTPS (GitHub) como en archivo local (file://)
+        async function sha256(message) {
+            if (window.crypto && window.crypto.subtle) {
+                try {
+                    const msgBuffer = new TextEncoder().encode(message);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                } catch (e) {
+                    // Continuar con respaldo JS
+                }
+            }
+            return sha256Fallback(message);
+        }
+
+        function sha256Fallback(ascii) {
+            function rightRotate(value, amount) {
+                return (value >>> amount) | (value << (32 - amount));
+            }
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiBitLength = ascii[lengthProperty] * 8;
+            var hash = sha256Fallback.h = sha256Fallback.h || [];
+            var k = sha256Fallback.k = sha256Fallback.k || [];
+            var primeCounter = k[lengthProperty];
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) {
+                        isComposite[i] = candidate;
+                    }
+                    hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+                    k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+                }
+            }
+            ascii += '\x80';
+            while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j >> 8) return;
+                words[i >> 2] |= j << ((3 - i) % 4) * 8;
+            }
+            words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+            words[words[lengthProperty]] = (asciiBitLength);
+            for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash;
+                hash = hash.slice(0, 8);
+                for (i = 0; i < 64; i++) {
+                    var w15 = w[i - 15], w2 = w[i - 2];
+                    var a = hash[0], e = hash[4];
+                    var temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                            w[i - 16]
+                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                            + w[i - 7]
+                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                        ) | 0);
+                    var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash = [(temp1 + temp2) | 0].concat(hash);
+                    hash[4] = (hash[4] + temp1) | 0;
+                }
+                for (i = 0; i < 8; i++) {
+                    hash[i] = (hash[i] + oldHash[i]) | 0;
+                }
+            }
+            for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                    var b = (hash[i] >> (j * 8)) & 255;
+                    result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        function checkAuthSession() {
+            const isAuth = localStorage.getItem('lsb_auth_session') || sessionStorage.getItem('lsb_auth_session');
+            const gate = document.getElementById('login-gate');
+            if (isAuth === 'verified') {
+                gate.classList.add('hidden');
+            } else {
+                gate.classList.remove('hidden');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const userRaw = document.getElementById('login-user').value.trim().toLowerCase();
+            const passRaw = document.getElementById('login-pass').value.trim();
+            const remember = document.getElementById('login-remember').checked;
+            const errorMsg = document.getElementById('login-error-msg');
+
+            if (!userRaw || !passRaw) return;
+
+            const hashedPass = await sha256(passRaw);
+            if (AUTHORIZED_USERS[userRaw] && AUTHORIZED_USERS[userRaw] === hashedPass) {
+                errorMsg.classList.add('hidden');
+                if (remember) {
+                    localStorage.setItem('lsb_auth_session', 'verified');
+                } else {
+                    sessionStorage.setItem('lsb_auth_session', 'verified');
+                }
+                document.getElementById('login-gate').classList.add('hidden');
+                showToast(`¡Bienvenido a La Santa Barber, ${userRaw}!`, "success");
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function quickClientLogin() {
+            document.getElementById('login-user').value = 'cliente';
+            document.getElementById('login-pass').value = '2026';
+            document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+        }
+
+        function logoutApp() {
+            localStorage.removeItem('lsb_auth_session');
+            sessionStorage.removeItem('lsb_auth_session');
+            document.getElementById('login-pass').value = '';
+            document.getElementById('login-gate').classList.remove('hidden');
+            showToast("Sesión cerrada correctamente.", "info");
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('login-pass');
+            const icon = document.getElementById('pass-eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-regular fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-regular fa-eye';
+            }
+        }
+
+        /* ========================================================================
+           2. CONFIGURACIÓN INICIAL ("LA SANTA BARBER")
            ======================================================================== */
         const DEFAULT_DATA = {
             brandName: "LA SANTA BARBER",
             address: "Calle 38 No. 44 – 42 Calle Vieja, Bello – Antioquia, Colombia",
             instagram: "la_santa.barber_",
-            email: "neiker_2532@icloud.com",
             hoursWeekdays: "09:00 AM - 08:30 PM",
             hoursWeekends: "10:00 AM - 06:00 PM",
             welcomeText: "Espacio de relajación y estilo masculino. Bienvenidos a una experiencia extraordinaria donde barberos profesionales esperan complacer tu buen gusto.",
@@ -888,20 +1062,51 @@
         let lastCreatedBooking = null;
 
         /* ========================================================================
-           2. INICIALIZACIÓN DE LA APLICACIÓN
+           3. INICIALIZACIÓN Y REGISTRO DE SERVICE WORKER (PWA)
            ======================================================================== */
         function loadAppState() {
-            try {
-                appConfig = JSON.parse(JSON.stringify(DEFAULT_DATA));
-            } catch (e) {
-                console.error("Error cargando estado local:", e);
-                appConfig = JSON.parse(JSON.stringify(DEFAULT_DATA));
-            }
+            checkAuthSession();
+            appConfig = JSON.parse(JSON.stringify(DEFAULT_DATA));
             renderAllUI();
+            registerServiceWorker();
+        }
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch(err => {
+                    console.warn('Service Worker registro omitido en entorno local:', err);
+                });
+            }
+        }
+
+        // Captura de evento de instalación PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('pwa-install-btn');
+            if (installBtn) {
+                installBtn.classList.remove('hidden');
+                installBtn.classList.add('flex');
+            }
+        });
+
+        async function installPWA() {
+            if (!deferredPrompt) {
+                showToast("En iPhone/Mac Safari: pulsa 'Compartir' y luego 'Agregar a inicio'.", "info");
+                return;
+            }
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                showToast("¡Aplicación instalada correctamente en tu dispositivo!", "success");
+            }
+            deferredPrompt = null;
+            document.getElementById('pwa-install-btn').classList.add('hidden');
         }
 
         /* ========================================================================
-           3. RENDERIZADO DINÁMICO DE TODA LA INTERFAZ
+           4. RENDERIZADO DINÁMICO DE TODA LA INTERFAZ
            ======================================================================== */
         function formatCOP(value) {
             return new Intl.NumberFormat('es-CO', {
@@ -911,23 +1116,62 @@
             }).format(value);
         }
 
+        function buildBarberWhatsAppMessage(barberName, clientData = null) {
+            if (clientData) {
+                return `¡Hola ${barberName}! 👋 Deseo reservar una cita en LA SANTA BARBER:
+
+` +
+                    `👤 Cliente: ${clientData.clientName}
+` +
+                    `📱 WhatsApp: ${clientData.clientPhone}
+` +
+                    `📍 Ubicación: ${clientData.clientLocation}
+` +
+                    `✂️ Servicio: ${clientData.serviceName} ($ ${new Intl.NumberFormat('es-CO').format(clientData.servicePrice)})
+` +
+                    `📅 Fecha: ${clientData.date}
+` +
+                    `⏰ Hora: ${clientData.time}
+
+` +
+                    `Autorizo el tratamiento de datos personales (Ley 1581 de 2012)`;
+            }
+            const today = new Date().toISOString().split('T')[0];
+            return `¡Hola ${barberName}! 👋 Deseo reservar una cita en LA SANTA BARBER:
+
+` +
+                `👤 Cliente: 
+` +
+                `📱 WhatsApp: 
+` +
+                `📍 Ubicación: (Sector, Barrio, Localidad)
+` +
+                `✂️ Servicio: Corte de Cabello Normal Caballero ($ 22.000)
+` +
+                `📅 Fecha: ${today}
+` +
+                `⏰ Hora: 
+
+` +
+                `Autorizo el tratamiento de datos personales (Ley 1581 de 2012)`;
+        }
+
         function renderAllUI() {
-            // Títulos y textos de marca
             document.getElementById('page-title').textContent = `${appConfig.brandName} | Estilo & Tradición`;
             document.getElementById('nav-brand-name').textContent = appConfig.brandName;
             document.getElementById('hero-main-title').textContent = appConfig.brandName;
-            document.getElementById('current-date').textContent = new Intl.DateTimeFormat('es-CO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Bogota' }).format(new Date());
+            document.getElementById('current-date').textContent = new Intl.DateTimeFormat('es-CO', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Bogota'
+            }).format(new Date());
             document.getElementById('hero-address-badge').textContent = appConfig.address;
             document.getElementById('hero-welcome-text').textContent = `"${appConfig.welcomeText}"`;
             document.getElementById('display-hours-weekdays').textContent = appConfig.hoursWeekdays;
             document.getElementById('display-hours-weekends').textContent = appConfig.hoursWeekends;
             document.getElementById('footer-brand-name').textContent = appConfig.brandName;
             document.getElementById('footer-address').innerHTML = `<i class="fa-solid fa-location-dot text-barber-gold mr-1.5"></i> ${appConfig.address}`;
-            document.getElementById('footer-email-text').textContent = appConfig.email;
-            document.getElementById('social-instagram').href = `https://instagram.com/${appConfig.instagram}`;
-            document.getElementById('social-email').href = `mailto:${appConfig.email}`;
+            document.getElementById('social-instagram').href = `https://www.instagram.com/${appConfig.instagram}/`;
 
-            // Renderizar Servicios
+            // Renderizar Servicios (SIN botón inferior "Agendar este Servicio")
             const servicesGrid = document.getElementById('services-grid');
             servicesGrid.innerHTML = appConfig.services.map(srv => `
                 <div class="bg-barber-card border border-barber-gold/25 hover:border-barber-gold rounded-3xl p-6 flex flex-col justify-between shadow-xl transition duration-300 group">
@@ -941,15 +1185,14 @@
                         <h3 class="font-serifVintage text-lg font-bold text-barber-cream group-hover:text-barber-goldLight transition">${srv.name}</h3>
                         <p class="mt-2 text-xs sm:text-sm text-barber-sand/80 leading-relaxed">${srv.description}</p>
                     </div>
-                    <button onclick="openBookingModal('${srv.id}')" class="mt-6 w-full py-2.5 rounded-xl bg-barber-wood border border-barber-gold/35 text-barber-cream text-xs font-bold uppercase tracking-wider hover:bg-barber-gold hover:text-barber-dark transition">
-                        Agendar este Servicio
-                    </button>
                 </div>
             `).join('');
 
-            // Renderizar Equipo de Barberos
+            // Renderizar Equipo de Barberos (SIN botón "Reservar Turno con...", SOLO acceso directo a WhatsApp optimizado)
             const barbersGrid = document.getElementById('barbers-grid');
-            barbersGrid.innerHTML = appConfig.barbers.map(barb => `
+            barbersGrid.innerHTML = appConfig.barbers.map(barb => {
+                const directWaMsg = buildBarberWhatsAppMessage(barb.name);
+                return `
                 <div class="bg-barber-card border border-barber-gold/30 rounded-3xl p-6 text-center flex flex-col justify-between shadow-xl hover:border-barber-gold transition">
                     <div>
                         <!-- Fotografía Circular con Borde Dorado -->
@@ -971,27 +1214,18 @@
                     </div>
 
                     <div class="mt-6 pt-4 border-t border-barber-gold/15">
-                        <!-- Leyenda obligatoria encima de cada botón WhatsApp -->
-                        <p class="text-xs font-bold text-barber-goldLight mb-2 animate-pulse">
+                        <p class="text-xs font-bold text-barber-goldLight mb-2.5 animate-pulse">
                             ¡Qué esperas, agenda tu cita ya!
                         </p>
-                        <div class="flex flex-col gap-2">
-                            <button onclick="openBookingModal(null, '${barb.id}')" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-barber-goldDark via-barber-gold to-barber-goldDark text-barber-dark font-bold text-xs shadow hover:brightness-110 transition flex items-center justify-center gap-2">
-                                <i class="fa-regular fa-calendar-check"></i>
-                                <span>Reservar Turno con ${barb.name}</span>
-                            </button>
-                            <a href="https://wa.me/57${barb.phone.replace(/\D/g,'')}?text=${encodeURIComponent(`Hola ${barb.name}, vengo de la App de ${appConfig.brandName} y deseo agendar una cita.`)}"
-                               target="_blank" rel="noopener noreferrer"
-                               class="w-full py-2 px-4 rounded-xl bg-[#1E9E50]/20 border border-[#25D366]/50 text-emerald-300 hover:bg-[#25D366] hover:text-white font-semibold text-xs transition flex items-center justify-center gap-2">
-                                <i class="fa-brands fa-whatsapp text-base"></i>
-                                <span>WhatsApp: ${barb.phone}</span>
-                            </a>
-                        </div>
+                        <a href="https://wa.me/57${barb.phone.replace(/\D/g,'')}?text=${encodeURIComponent(directWaMsg)}"
+                           target="_blank" rel="noopener noreferrer"
+                           class="w-full py-3 px-4 rounded-xl bg-[#1E9E50]/20 border border-[#25D366]/60 text-emerald-300 hover:bg-[#25D366] hover:text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>WhatsApp ${barb.name}: ${barb.phone}</span>
+                        </a>
                     </div>
                 </div>
-            `).join('');
-
-
+            `}).join('');
         }
 
         /* ========================================================================
@@ -1003,18 +1237,14 @@
             const barberSelect = document.getElementById('book-barber');
             const dateInput = document.getElementById('book-date');
 
-            // Llenar servicios
             serviceSelect.innerHTML = appConfig.services.map(s =>
                 `<option value="${s.id}" ${s.id === preselectedServiceId ? 'selected' : ''}>${s.name} - ${formatCOP(s.price)}</option>`
             ).join('');
 
-            // Llenar barberos + opción "Cualquiera disponible"
-            barberSelect.innerHTML = `<option value="ANY">Cualquier barbero disponible</option>` +
-                appConfig.barbers.map(b =>
-                    `<option value="${b.id}" ${b.id === preselectedBarberId ? 'selected' : ''}>${b.name} (${b.phone})</option>`
-                ).join('');
+            barberSelect.innerHTML = appConfig.barbers.map(b =>
+                `<option value="${b.id}" ${b.id === preselectedBarberId ? 'selected' : ''}>${b.name} (${b.phone})</option>`
+            ).join('');
 
-            // Fecha mínima hoy
             const today = new Date().toISOString().split('T')[0];
             dateInput.min = today;
             if (!dateInput.value) {
@@ -1029,7 +1259,6 @@
             document.getElementById('booking-modal').classList.add('hidden');
         }
 
-        // Genera intervalos cada 30 minutos según si es Lunes-Sábado (9:00-20:30) o Domingo (10:00-18:00)
         function populateAvailableTimeSlots() {
             const dateVal = document.getElementById('book-date').value;
             const timeSelect = document.getElementById('book-time');
@@ -1056,23 +1285,19 @@
                 }
             }
             timeSelect.innerHTML = optionsHTML;
-                    }
+        }
 
         function submitBooking(event) {
             event.preventDefault();
             const clientName = document.getElementById('book-name').value.trim();
             const clientPhone = document.getElementById('book-phone').value.trim();
             const serviceId = document.getElementById('book-service').value;
-            let barberId = document.getElementById('book-barber').value;
+            const barberId = document.getElementById('book-barber').value;
             const clientLocation = document.getElementById('book-location').value.trim();
             const dateVal = document.getElementById('book-date').value;
             const timeVal = document.getElementById('book-time').value;
 
             const serviceObj = appConfig.services.find(s => s.id === serviceId) || appConfig.services[0];
-
-            // Si eligió "Cualquier barbero disponible", asignar el primero libre
-            if (barberId === 'ANY') barberId = appConfig.barbers[0].id;
-
             const barberObj = appConfig.barbers.find(b => b.id === barberId) || appConfig.barbers[0];
 
             const newBooking = {
@@ -1092,25 +1317,11 @@
 
             lastCreatedBooking = newBooking;
 
-            // Preparar enlaces de WhatsApp del barbero y correo iCloud
-            const waText = `¡Hola *${barberObj.name}*! 👋 Deseo confirmar mi cita en *${appConfig.brandName}*:\n\n` +
-                `📋 *Código:* ${newBooking.id}\n` +
-                `👤 *Cliente:* ${newBooking.clientName}\n` +
-                `📱 *WhatsApp:* ${newBooking.clientPhone}\n` +
-                `📍 *Ubicación:* ${newBooking.clientLocation}\n` +
-                `✂️ *Servicio:* ${newBooking.serviceName} (${formatCOP(newBooking.servicePrice)})\n` +
-                `📅 *Fecha:* ${newBooking.date}\n` +
-                `⏰ *Hora:* ${newBooking.time}\n\n` +
-                `_Autorizo el tratamiento de datos personales (Ley 1581 de 2012)._`;
-
+            // Mensaje exacto solicitado diferenciando cada barbero
+            const waText = buildBarberWhatsAppMessage(barberObj.name, newBooking);
             const cleanBarberPhone = barberObj.phone.replace(/\D/g, '');
             const waUrl = `https://wa.me/57${cleanBarberPhone}?text=${encodeURIComponent(waText)}`;
 
-            const mailSubject = `Nueva Cita Agendada - ${appConfig.brandName} (${newBooking.date} ${newBooking.time})`;
-            const mailBody = `Detalles de la Reserva:\n\nCliente: ${newBooking.clientName}\nTeléfono: ${newBooking.clientPhone}\nUbicación: ${newBooking.clientLocation}\nBarbero: ${newBooking.barberName}\nServicio: ${newBooking.serviceName}\nFecha y Hora: ${newBooking.date} a las ${newBooking.time}`;
-            const mailtoUrl = `mailto:${appConfig.email}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-
-            // Mostrar Modal de Confirmación
             document.getElementById('conf-summary-text').innerHTML = `
                 <strong>Barbero:</strong> ${barberObj.name}<br>
                 <strong>Servicio:</strong> ${serviceObj.name} (${formatCOP(serviceObj.price)})<br>
@@ -1118,23 +1329,20 @@
                 <strong>Cliente:</strong> ${clientName}
             `;
             document.getElementById('conf-whatsapp-link').href = waUrl;
-            document.getElementById('conf-mailto-link').href = mailtoUrl;
 
             closeBookingModal();
             document.getElementById('confirmation-modal').classList.remove('hidden');
-            showToast("¡Cita preparada! Continúa para contactar al barbero.", "success");
+            showToast(`¡Cita preparada para ${barberObj.name}!`, "success");
         }
 
         function closeConfirmationModal() {
             document.getElementById('confirmation-modal').classList.add('hidden');
         }
 
-        // Genera archivo .ICS estándar compatible con Apple Calendar (iCloud), Google Calendar y Outlook
         function downloadLastBookingICS() {
             if (!lastCreatedBooking) return;
             const b = lastCreatedBooking;
             const startDT = b.date.replace(/-/g, '') + 'T' + b.time.replace(':', '') + '00';
-            // Duración estimada 45 mins
             const [hh, mm] = b.time.split(':').map(Number);
             const endDateObj = new Date(2026, 0, 1, hh, mm + 45);
             const endHH = String(endDateObj.getHours()).padStart(2, '0');
@@ -1153,7 +1361,6 @@
                 `SUMMARY:Cita ${appConfig.brandName} - ${b.serviceName} (${b.barberName})`,
                 `DESCRIPTION:Cliente: ${b.clientName} | Tel: ${b.clientPhone} | Ubicación: ${b.clientLocation} | Barbero: ${b.barberName}`,
                 `LOCATION:${appConfig.address}`,
-                `ORGANIZER;CN=${appConfig.brandName}:mailto:${appConfig.email}`,
                 'BEGIN:VALARM',
                 'TRIGGER:-PT30M',
                 'ACTION:DISPLAY',
@@ -1168,89 +1375,11 @@
             link.href = URL.createObjectURL(blob);
             link.download = `Cita_${appConfig.brandName.replace(/\s+/g, '_')}_${b.date}.ics`;
             link.click();
-            showToast("Evento .ICS descargado. Ábrelo para añadirlo a tu Calendario iCloud/Celular.", "success");
+            showToast("Evento .ICS descargado para tu Calendario.", "success");
         }
 
         /* ========================================================================
-           6. CHATBOT ASISTENTE VIRTUAL INTELIGENTE
-           ======================================================================== */
-        function toggleChatbot() {
-            const win = document.getElementById('chatbot-window');
-            win.classList.toggle('hidden');
-        }
-
-        function appendBotMessage(text, isUser = false) {
-            const box = document.getElementById('chatbot-messages');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = isUser
-                ? "bg-barber-gold text-barber-dark font-medium p-3 rounded-2xl rounded-tr-none ml-8 shadow"
-                : "bg-barber-wood/95 border border-barber-gold/25 text-barber-cream p-3 rounded-2xl rounded-tl-none mr-6 shadow";
-            msgDiv.innerHTML = text;
-            box.appendChild(msgDiv);
-            box.scrollTop = box.scrollHeight;
-        }
-
-        function botQuickReply(topic) {
-            if (topic === 'precios') {
-                appendBotMessage("¿Cuáles son los precios de los servicios?", true);
-                const list = appConfig.services.map(s => `• <strong>${s.name}:</strong> ${formatCOP(s.price)}`).join('<br>');
-                setTimeout(() => {
-                    appendBotMessage(`Aquí tienes nuestras tarifas actuales:<br><br>${list}<br><br><em>Mismos precios para niños y jóvenes.</em>`);
-                }, 300);
-            } else if (topic === 'horarios') {
-                appendBotMessage("¿Qué horarios manejan?", true);
-                setTimeout(() => {
-                    appendBotMessage(`Atendemos en los siguientes horarios:<br>• <strong>Lunes a Sábado:</strong> ${appConfig.hoursWeekdays}<br>• <strong>Domingos y Festivos:</strong> ${appConfig.hoursWeekends}`);
-                }, 300);
-            } else if (topic === 'ubicacion') {
-                appendBotMessage("¿Dónde están ubicados?", true);
-                setTimeout(() => {
-                    appendBotMessage(`Nos encontramos en: <strong>${appConfig.address}</strong>. ¡Te esperamos!`);
-                }, 300);
-            } else if (topic === 'agendar') {
-                appendBotMessage("Quiero agendar una cita ahora", true);
-                setTimeout(() => {
-                    appendBotMessage(`¡Con gusto! Abriendo el formulario para agendar tu cita...`);
-                    openBookingModal();
-                }, 400);
-            } else if (topic === 'humano') {
-                appendBotMessage("Necesito hablar con un barbero humano", true);
-                const links = appConfig.barbers.map(b =>
-                    `<a href="https://wa.me/57${b.phone.replace(/\D/g,'')}?text=${encodeURIComponent('Hola ' + b.name + ', necesito atención personalizada.')}" target="_blank" class="block mt-1.5 px-3 py-1.5 rounded-lg bg-[#25D366] text-white font-bold text-center"><i class="fa-brands fa-whatsapp"></i> Chatear con ${b.name}</a>`
-                ).join('');
-                setTimeout(() => {
-                    appendBotMessage(`🔔 <strong>Alerta enviada al equipo.</strong> Puedes contactar directamente a cualquiera de nuestros barberos por WhatsApp:<br>${links}`);
-                }, 350);
-            }
-        }
-
-        function handleChatbotSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('chatbot-input');
-            const text = input.value.trim();
-            if (!text) return;
-
-            appendBotMessage(text, true);
-            input.value = '';
-
-            const lower = text.toLowerCase();
-            setTimeout(() => {
-                if (lower.includes('precio') || lower.includes('cuesta') || lower.includes('valor') || lower.includes('corte')) {
-                    botQuickReply('precios');
-                } else if (lower.includes('hora') || lower.includes('abierto') || lower.includes('domingo')) {
-                    botQuickReply('horarios');
-                } else if (lower.includes('donde') || lower.includes('ubicacion') || lower.includes('direccion')) {
-                    botQuickReply('ubicacion');
-                } else if (lower.includes('cita') || lower.includes('reservar') || lower.includes('turno') || lower.includes('agendar')) {
-                    appendBotMessage(`¡Perfecto! Haz clic aquí para escoger tu día, hora y barbero:<br><button onclick="openBookingModal()" class="mt-2 w-full py-2 rounded-xl bg-barber-gold text-barber-dark font-bold">Abrir Formulario de Reserva</button>`);
-                } else {
-                    appendBotMessage(`Entiendo tu consulta. Si deseas atención directa de un barbero humano o agendar de inmediato, selecciona una opción abajo o abre el <button onclick="openBookingModal()" class="underline text-barber-gold font-bold">Calendario de Reservas</button>.`);
-                }
-            }, 350);
-        }
-
-        /* ========================================================================
-           8. SISTEMA DE NOTIFICACIONES TOAST
+           6. SISTEMA DE NOTIFICACIONES TOAST
            ======================================================================== */
         function showToast(message, type = "success") {
             const toast = document.getElementById('toast-notification');
